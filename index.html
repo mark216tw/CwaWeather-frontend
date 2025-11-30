@@ -4,25 +4,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>森森天氣</title>
+    <title>台南好天氣報給你知</title>
     <link rel="icon" type="image/png" href="./icon-v2.png">
     <link rel="apple-touch-icon" href="./icon-v2.png">
     <link rel="apple-touch-icon" sizes="180x180" href="./icon-v2.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;700;900&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&family=Noto+Sans+TC:wght@400;700;900&display=swap"
         rel="stylesheet">
 
     <style>
         :root {
-            --ac-green: #7DE1A9;
-            --ac-bg-pattern: #8FD8AF;
-            --ac-cream: #FFFEF2;
-            --ac-yellow: #F9F195;
-            --ac-brown: #796452;
-            --ac-blue: #4FB5D9;
-            --ac-dark: #58504A;
-            --ac-card-border: #E6E0C8;
+            --ac-green: #87CEEB;
+            --ac-bg-pattern: #B0E0E6;
+            --ac-cream: #FFFFFF;
+            --ac-yellow: #FFD700;
+            --ac-brown: #8B4513;
+            --ac-blue: #1E90FF;
+            --ac-dark: #333333;
+            --ac-card-border: #FFFFFF;
+            --doraemon-red: #FF0000;
+            --doraemon-white: #FFFFFF;
+            --doraemon-black: #000000;
+            --doraemon-yellow: #FFD700;
         }
 
         * {
@@ -33,16 +37,47 @@
         }
 
         body {
-            font-family: 'Zen Maru Gothic', sans-serif;
-            background-color: var(--ac-green);
-            /* 更細緻的斜紋背景 */
-            background-image:
-                repeating-linear-gradient(45deg, transparent, transparent 20px, rgba(255, 255, 255, 0.2) 20px, rgba(255, 255, 255, 0.2) 40px);
+            font-family: 'Comic Neue', 'Noto Sans TC', sans-serif;
+            background: linear-gradient(135deg, #4A90E2 0%, #357ABD 100%);
             min-height: 100vh;
             color: var(--ac-dark);
             /* 防止 iOS 左右滑動 */
             overflow-x: hidden;
             padding-bottom: 20px;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.2) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        body::after {
+            content: '🤖';
+            position: fixed;
+            bottom: -50px;
+            right: -50px;
+            font-size: 300px;
+            opacity: 0.08;
+            pointer-events: none;
+            z-index: -1;
+            animation: doraemonFloat 15s ease-in-out infinite;
+        }
+
+        @keyframes doraemonFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-30px) rotate(5deg); }
+            50% { transform: translateY(-60px) rotate(0deg); }
+            75% { transform: translateY(-30px) rotate(-5deg); }
         }
 
         /* 頂部狀態列 */
@@ -61,21 +96,22 @@
         .location-pill {
             background: var(--ac-yellow);
             color: var(--ac-brown);
-            padding: 5px 15px;
-            border-radius: 20px;
+            padding: 8px 18px;
+            border-radius: 25px;
             font-weight: 900;
             font-size: 1.1rem;
             transform: rotate(-2deg);
-            border: 2px solid white;
-            box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.1);
+            border: 3px solid white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
         }
 
         .update-pill {
             font-size: 0.8rem;
             color: white;
             background: rgba(0, 0, 0, 0.2);
-            padding: 4px 10px;
-            border-radius: 12px;
+            padding: 6px 14px;
+            border-radius: 15px;
+            border: 2px solid rgba(255, 255, 255, 0.5);
         }
 
         .container {
@@ -122,7 +158,7 @@
 
         .hero-icon {
             font-size: 5rem;
-            filter: drop-shadow(0 4px 0 rgba(0, 0, 0, 0.1));
+            filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.15));
             animation: bounce 3s infinite;
         }
 
@@ -166,9 +202,11 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            background: rgba(255, 255, 255, 0.5);
-            padding: 10px;
-            border-radius: 20px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.7) 100%);
+            padding: 12px;
+            border-radius: 25px;
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
         }
 
         .advice-icon {
@@ -210,13 +248,13 @@
 
         .mini-card {
             min-width: 140px;
-            background: rgba(255, 255, 255, 0.85);
-            border-radius: 25px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 30px;
             padding: 20px 15px;
             text-align: center;
             border: 3px solid white;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.12);
             flex-shrink: 0;
-            /* 防止被擠壓 */
         }
 
         .mini-time {
@@ -248,12 +286,23 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: var(--ac-green);
+            background: linear-gradient(135deg, #4A90E2 0%, #357ABD 100%);
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             z-index: 999;
+        }
+
+        /* 頁面標題 */
+        .page-title {
+            font-size: 2rem;
+            font-weight: 900;
+            color: white;
+            text-align: center;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            letter-spacing: 2px;
         }
     </style>
 </head>
@@ -269,6 +318,7 @@
     </div>
 
     <div class="container" id="mainContent" style="display: none;">
+        <div class="page-title">🌤️ 台南好天氣報給你知 🌤️</div>
 
         <div id="heroCard">
         </div>
